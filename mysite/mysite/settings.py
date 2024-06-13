@@ -27,6 +27,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Конфигурация сервера электронной почты
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_HOST_USER = 'o1d.kuk@yandex.ru'
+EMAIL_HOST_PASSWORD = 'miptyctgculipsiq'
+EMAIL_PORT = 465
+EMAIL_USE_TLS = True
 
 # Application definition
 
