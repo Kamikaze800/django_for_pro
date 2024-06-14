@@ -32,7 +32,8 @@ EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_HOST_USER = 'o1d.kuk@yandex.ru'
 EMAIL_HOST_PASSWORD = 'miptyctgculipsiq'
 EMAIL_PORT = 465
-EMAIL_USE_TLS = True
+EMAIL_USE_SSL = True
+
 
 # Application definition
 
@@ -44,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
+    'taggit',
+
 ]
 
 MIDDLEWARE = [
