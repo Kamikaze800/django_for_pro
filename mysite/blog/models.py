@@ -45,6 +45,10 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def total_comments(self) -> int:
+        return self.comments.count()
+
     def get_absolute_url(self):
         return reverse('blog:post_detail',
                        args=[self.publish.year,
@@ -56,7 +60,7 @@ class Post(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey(Post,
                              on_delete=models.CASCADE,
-                             related_name='comments') # можем обращаться к посту, используя comment.psot
+                             related_name='comments') # можем обращаться к посту, используя comment.post
     # или можно вычленить все комментарии поста, используя post.comments.all()
     name = models.CharField(max_length=80)
     email = models.EmailField()

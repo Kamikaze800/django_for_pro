@@ -12,6 +12,16 @@ def total_posts():  # Django будет использовать имя функ
 
 
 @register.inclusion_tag('blog/post/latest_posts.html')
-def show_latest_posts(count=5): # позволяет задавать опциональное число отображаемых постов как {% show_latest_posts 3 %}
+def show_latest_posts(
+        count=5):  # позволяет задавать опциональное число отображаемых постов как {% show_latest_posts 3 %}
     latest_posts = Post.published.order_by('-publish')[:count]
     return {'latest_posts': latest_posts}
+
+
+from django.db.models import Count
+
+
+@register.simple_tag
+def get_most_commented_posts(count=5):
+    return Post.published.annotate( # с помощью функции annotate() формируется набор запросов QuerySet
+        total_comments=Count('comments')).order_by('-total_comments')[:count]
