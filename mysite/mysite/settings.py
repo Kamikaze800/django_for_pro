@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -24,6 +23,21 @@ SECRET_KEY = 'django-insecure-6e^3qgf*u7j%2!idjwu0k99ekuoawb-gxrxwa+i4skmywchd0p
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+SITE_ID = 1
+
+LOGIN_REDIRECT_URL = 'dashboard'
+#LOGIN_REDIRECT_URL: сообщает Django URL-адрес, на который следует перенаправлять пользователя после успешного входа, если в запросе нет
+# параметра next;
+
+LOGIN_URL = 'login'
+# LOGIN_URL: URL-адрес, на который следует перенаправлять пользователя,
+# чтобы зарегистрировать его вход (например, представления, в которых
+# используется декоратор login_required);
+
+LOGOUT_URL = 'logout'
+# LOGOUT_URL: URL-адрес, на который следует перенаправлять пользователя, чтобы зарегистрировать его выход.
+
 
 ALLOWED_HOSTS = []
 
@@ -34,10 +48,10 @@ EMAIL_HOST_PASSWORD = 'miptyctgculipsiq'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 
-
 # Application definition
 
 INSTALLED_APPS = [
+    'account',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,6 +60,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
     'taggit',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
+    'django.contrib.postgres',
+
 
 ]
 
@@ -79,14 +97,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'blog',
+        'USER': 'admin',
+        'PASSWORD': 'admin',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
@@ -109,7 +137,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -120,7 +147,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/

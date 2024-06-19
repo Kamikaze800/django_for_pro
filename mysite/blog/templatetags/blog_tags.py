@@ -1,5 +1,8 @@
 from django import template
 from ..models import Post
+from django.utils.safestring import mark_safe
+import markdown
+from django.db.models import Count
 
 register = template.Library()  # Для того чтобы быть допустимой библиотекой тегов
 
@@ -18,10 +21,15 @@ def show_latest_posts(
     return {'latest_posts': latest_posts}
 
 
-from django.db.models import Count
+
 
 
 @register.simple_tag
 def get_most_commented_posts(count=5):
-    return Post.published.annotate( # с помощью функции annotate() формируется набор запросов QuerySet
+    return Post.published.annotate(  # с помощью функции annotate() формируется набор запросов QuerySet
         total_comments=Count('comments')).order_by('-total_comments')[:count]
+
+
+@register.filter(name='markdown')
+def markdown_format(text):
+    return mark_safe(markdown.markdown(text))

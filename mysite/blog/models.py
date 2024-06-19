@@ -45,9 +45,9 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-    @property
-    def total_comments(self) -> int:
-        return self.comments.count()
+    # @property
+    # def total_comments(self) -> int:
+    #     return self.comments.count()
 
     def get_absolute_url(self):
         return reverse('blog:post_detail',
