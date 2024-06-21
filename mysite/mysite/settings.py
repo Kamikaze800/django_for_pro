@@ -26,8 +26,11 @@ DEBUG = True
 
 SITE_ID = 1
 
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 LOGIN_REDIRECT_URL = 'dashboard'
-#LOGIN_REDIRECT_URL: сообщает Django URL-адрес, на который следует перенаправлять пользователя после успешного входа, если в запросе нет
+# LOGIN_REDIRECT_URL: сообщает Django URL-адрес, на который следует перенаправлять пользователя после успешного входа, если в запросе нет
 # параметра next;
 
 LOGIN_URL = 'login'
@@ -38,8 +41,12 @@ LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 # LOGOUT_URL: URL-адрес, на который следует перенаправлять пользователя, чтобы зарегистрировать его выход.
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'account.authentication.EmailAuthBackend',
+]
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
 
 # Конфигурация сервера электронной почты
 EMAIL_HOST = 'smtp.yandex.ru'
@@ -63,7 +70,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'django.contrib.postgres',
-
+    'social_django',
+    'django_extensions',
 
 ]
 
@@ -117,7 +125,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
