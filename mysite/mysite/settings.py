@@ -24,7 +24,16 @@ SECRET_KEY = 'django-insecure-6e^3qgf*u7j%2!idjwu0k99ekuoawb-gxrxwa+i4skmywchd0p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+if DEBUG:
+    import mimetypes
+
+    mimetypes.add_type('application/javascript', '.js', True)
+    mimetypes.add_type('text/css', '.css', True)
+
 SITE_ID = 1
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '634334282421-47g4kq0g22h1s3q7oijg9lvb1eccovb0.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -44,6 +53,21 @@ LOGOUT_URL = 'logout'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'account.authentication.EmailAuthBackend',
+    'social_core.backends.google.GoogleOAuth2',
+
+]
+
+SOCIAL_AUTH_PIPELINE = [
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',
+    'account.authentication.create_profile',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
 ]
 
 ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
@@ -72,7 +96,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'social_django',
     'django_extensions',
-
+    'images.apps.ImagesConfig',
 ]
 
 MIDDLEWARE = [
